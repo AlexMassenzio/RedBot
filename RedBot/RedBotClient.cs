@@ -11,7 +11,11 @@ namespace RedBot
 	{
 		private DiscordClient bot;
 
-		public RedBotClient()
+		/// <summary>
+		/// Begins a new instance of the bot.
+		/// </summary>
+		/// <param name="token">The token string given to your bot upon creation</param>
+		public RedBotClient(string token)
 		{
 			bot = new DiscordClient();
 
@@ -19,18 +23,25 @@ namespace RedBot
 
 			bot.ExecuteAndWait(async () =>
 			{
-				await bot.Connect("");
+				await bot.Connect(token);
 			});
 		}
 
-		private void ProcessMessage(object sender, MessageEventArgs e)
+		/// <summary>
+		/// Handles all static commands sent by the server's users.
+		/// </summary>
+		/// <param name="s">Sender</param>
+		/// <param name="e">Event Args</param>
+		private void ProcessMessage(object s, MessageEventArgs e)
 		{
 			if (e.Message.IsAuthor)
 				return;
 
+			Console.WriteLine(e.Message);
+
 			if(e.Message.Text == "~ping")
 			{
-				e.Channel.SendMessage("pong");
+				e.Channel.SendMessage("pong!");
 			}
 			else if(e.Message.Text.ToLower().Contains("dat boi") && e.Channel.Name == "bot_test")
 			{
