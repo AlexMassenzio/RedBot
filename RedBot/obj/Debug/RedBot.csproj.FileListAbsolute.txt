@@ -36,3 +36,4 @@ C:\Users\Alex\Documents\Visual Studio 2015\Projects\tempp\RedBot\bin\Debug\Nito.
 C:\Users\Alex\Documents\Visual Studio 2015\Projects\tempp\RedBot\bin\Debug\Nito.AsyncEx.Enlightenment.xml
 C:\Users\Alex\Documents\Visual Studio 2015\Projects\tempp\RedBot\bin\Debug\RestSharp.xml
 C:\Users\Alex\Documents\Visual Studio 2015\Projects\tempp\RedBot\obj\Debug\RedBot.csprojResolveAssemblyReference.cache
+C:\Users\Alex\documents\visual studio 2015\Projects\RedBot\RedBot\bin\Debug\Discord.Net.Commands.dll

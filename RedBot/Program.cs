@@ -11,7 +11,14 @@ namespace RedBot
 	{
 		static void Main(string[] args)
 		{
-			RedBotClient bot = new RedBotClient();
+			string token = ""; //insert your token here if you want to use this bot!
+
+			if (args.Length == 2)
+			{
+				token = args[1];
+			}
+
+			RedBotClient bot = new RedBotClient(token);
 		}
 	}
 }
