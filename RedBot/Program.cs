@@ -11,7 +11,7 @@ namespace RedBot
 	{
 		static void Main(string[] args)
 		{
-			string token = ""; //insert your token here if you want to use this bot!
+			string token = "MjA4MzMzMTk4MjczNDEzMTIw.CnwMfg.n0qRQeEqKl05A4pI5H3A_Thi-lQ"; //insert your token here if you want to use this bot!
 
 			if (args.Length == 2)
 			{
