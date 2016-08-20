@@ -7,13 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBot", "RedBot\RedBot.csp
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		ARM|Any CPU = ARM|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{53E7DD37-EE22-4C79-A677-7C9573C5A5C2}.ARM|Any CPU.ActiveCfg = ARM|Any CPU
-		{53E7DD37-EE22-4C79-A677-7C9573C5A5C2}.ARM|Any CPU.Build.0 = ARM|Any CPU
 		{53E7DD37-EE22-4C79-A677-7C9573C5A5C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53E7DD37-EE22-4C79-A677-7C9573C5A5C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53E7DD37-EE22-4C79-A677-7C9573C5A5C2}.Release|Any CPU.ActiveCfg = Release|Any CPU

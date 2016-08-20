@@ -58,5 +58,17 @@ namespace RedBot.Properties {
                 this["challongeToken"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string adminChannel {
+            get {
+                return ((string)(this["adminChannel"]));
+            }
+            set {
+                this["adminChannel"] = value;
+            }
+        }
     }
 }

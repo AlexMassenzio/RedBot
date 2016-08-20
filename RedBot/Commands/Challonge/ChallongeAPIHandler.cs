@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedBot
+namespace RedBot.Commands.Challonge
 {
 	class ChallongeAPIHandler
 	{

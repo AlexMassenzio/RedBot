@@ -11,14 +11,19 @@ namespace RedBot
 	{
 		static void Main(string[] args)
 		{
-			string token = ""; //insert your token here if you want to use this bot!
 
-			if (args.Length == 2)
+			if(Properties.Settings.Default.discordToken == "" && Properties.Settings.Default.adminChannel == "")
 			{
-				token = args[1];
+				Console.WriteLine("I can see this is the first time your using me! To start, I'll need two things from you:\n  1) Your Discord bot token");
+				Properties.Settings.Default.discordToken = Console.ReadLine().Trim(); ;
+				Properties.Settings.Default.Save();
+
+				Console.WriteLine(" 2) The channel where you could to control me from (do not include the '#')");
+				Properties.Settings.Default.adminChannel = Console.ReadLine().Trim();
+				Properties.Settings.Default.Save();
 			}
 
-			RedBotClient bot = new RedBotClient(token);
+			RedBotClient bot = new RedBotClient();
 		}
 	}
 }
