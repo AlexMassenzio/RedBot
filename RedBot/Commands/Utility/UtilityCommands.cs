@@ -50,6 +50,14 @@ namespace RedBot.Commands
 				{
 					await e.Channel.SendMessage("https://github.com/AlexMassenzio/RedBot/wiki");
 				});
+
+			cmd.CreateCommand("door")
+				.Description("Alerts the eboard to grab the door for you during events. You should get a private message confirming it was sent.")
+				.Do(async e =>
+				{
+					await e.Server.TextChannels.FirstOrDefault(channel => channel.Name == "eboard")?.SendMessage(String.Format("{0}, {1} is at the door!", e.Server.Roles.FirstOrDefault(channel => channel.Name == "eboard")?.Mention, e.User.Name));
+					await e.User.SendMessage("The eboard has been alerted!");
+				});
 		}
 	}
 }
