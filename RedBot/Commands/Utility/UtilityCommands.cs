@@ -66,7 +66,7 @@ namespace RedBot.Commands
                 {
                     Random rand = new Random();
                     string die = "d100";
-                    if (e.Args.Length > 1)
+                    if (e.Args.Length > 0)
                     {
                         die = e.Args[0];
                     }
@@ -84,7 +84,7 @@ namespace RedBot.Commands
                         await e.Channel.SendMessage("Improper dice");
                         return;
                     }
-                    if (int.TryParse(parts[1], out sides))
+                    if (!int.TryParse(parts[1], out sides))
                     {
                         await e.Channel.SendMessage("Improper dice");
                         return;
