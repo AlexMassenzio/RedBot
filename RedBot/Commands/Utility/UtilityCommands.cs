@@ -66,9 +66,14 @@ namespace RedBot.Commands
                 {
                     Random rand = new Random();
                     string die = "d100";
-                    if (e.Args.Length > 0)
+                    if (e.Args[0] != "")
                     {
                         die = e.Args[0];
+                    }
+                    int nonDieBound = 0;
+                    if (int.TryParse(die,out nonDieBound))
+                    {
+                        die = "d" + die;
                     }
                     string[] parts = die.Split('d');
                     if (parts.Length < 2)
