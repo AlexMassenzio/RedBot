@@ -61,7 +61,7 @@ namespace RedBot
 		/// <param name="cmd">The DiscordClient's CommandService</param>
 		private void InitializeCommands(CommandService cmd)
 		{
-			//Hey! You're probably here to contribute some commands! If you feel lost, check out the RedBot wiki or email me at alexmassenzio@gmail.com
+			//Hey! You're probably here to contribute some commands! If you feel lost, check out the RedBot wiki or email me at alexmassenzio(at)gmail.com
 
 			new Commands.UtilityCommands(cmd);
 
@@ -75,10 +75,10 @@ namespace RedBot
 		/// <param name="e">Event Args</param>
 		private void ProcessMessageSpecial(object s, MessageEventArgs e)
 		{
+			Console.WriteLine(e.Message);
+
 			if (e.Message.IsAuthor)
 				return;
-
-			Console.WriteLine(e.Message);
 
 			if(e.Message.Text.ToLower().Contains("dat boi"))
 			{
