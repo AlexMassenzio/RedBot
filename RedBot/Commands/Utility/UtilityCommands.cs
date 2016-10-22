@@ -101,6 +101,24 @@ namespace RedBot.Commands
                     }
                     await e.Channel.SendMessage(sum.ToString());
                 });
+
+            cmd.CreateCommand("choose")
+                .Description("Chooses an option from a list of options")
+                .Parameter("choices", ParameterType.Multiple)
+                .Do(async e =>
+                {
+                    if (e.Args.Length < 0)
+                    {
+                        await e.Channel.SendMessage("You got to give me some options split up with or");
+                        return;
+                    }
+                    Random rand = new Random();
+                    string[] delimiter = { "or" };
+                    string full_string = String.Join(" ", e.Args);
+                    string[] choices = full_string.Split(delimiter, StringSplitOptions.None);
+                    await e.Channel.SendMessage(choices[rand.Next(choices.Length)].Trim(' '));
+                    return;
+                });
         }
 	}
 }
