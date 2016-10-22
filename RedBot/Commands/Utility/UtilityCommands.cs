@@ -107,9 +107,9 @@ namespace RedBot.Commands
                 .Parameter("choices", ParameterType.Multiple)
                 .Do(async e =>
                 {
-                    if (e.Args.Length < 0)
+                    if (e.Args.Length == 0)
                     {
-                        await e.Channel.SendMessage("You got to give me some options split up with or");
+                        await e.Channel.SendMessage("You got to give me some options split with or");
                         return;
                     }
                     Random rand = new Random();
