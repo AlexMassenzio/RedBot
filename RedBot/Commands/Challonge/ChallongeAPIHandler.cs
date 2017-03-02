@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Discord.Net;
+using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Deserializers;
 using System;
@@ -31,7 +32,7 @@ namespace RedBot.Commands.Challonge
 
 			if (test != System.Net.HttpStatusCode.OK)
 			{
-				throw new ArgumentException("Could not connect to Challonge, check your credentials and the website status.");
+				throw new HttpException(test);
 			}
 
 			SelectedTournament = null;

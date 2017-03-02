@@ -39,7 +39,7 @@ namespace RedBot
 					await bot.Connect(Properties.Settings.Default.discordToken);
 				});
 			}
-			catch (Discord.Net.HttpException e)
+			catch (Discord.Net.HttpException)
 			{
 				Console.WriteLine("Something went wrong when tring to connect to the Discord service. Usually has to do with an invalid token.\n" + 
 					"Would you like to try a new token? (y/n)");
