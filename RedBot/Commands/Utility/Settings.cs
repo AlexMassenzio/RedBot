@@ -8,83 +8,71 @@ using RedBot.Commands;
 
 namespace RedBot.Commands.Utility
 {
-	class Settings
+	[Group("settings")]
+	class Settings : ModuleBase<SocketCommandContext>
 	{
-		public Settings(CommandService cmd)
-		{
-			InitCommands(cmd);
+		[Command("directory")]
+		[Alias("dir")]
+		[Summary("Displays the commands you can use for settings.")]
+		public async Task DirectoryAsync()
+        {
+			Console.WriteLine("Hit Directory");
+			if (Context.Channel.ToString() == Properties.Settings.Default.adminChannel)
+			{
+				await Context.Channel.SendMessageAsync("1) Change admin channel.\n2) Change challonge token.\n3) Change the challonge account.");
+			}
+			else
+			{
+				await Context.Channel.SendMessageAsync("Wong channel accessed.");
+			}
 		}
 
-		private void InitCommands(CommandService cmd)
-		{
-			cmd.CreateGroup("settings", cgb =>
+		[Command("changeAdminChannel")]
+		[Summary("Changes the channel in which this settings panel comes up.")]
+		public async Task ChangeAdminChannelAsync(string newChannel)
+        {
+			if (Context.Channel.ToString() == Properties.Settings.Default.adminChannel)
 			{
-				cgb.CreateCommand("directory")
-						.Alias("dir")
-						.Description("Displays the commands you can use for settings.")
-						.Do(async e =>
-						{
-							if (e.Channel.ToString() == Properties.Settings.Default.adminChannel)
-							{
-								await e.Channel.SendMessage("1) Change admin channel.\n2) Change challonge token.\n3) Change the challonge account.");
-							}
-							else
-							{
-								await e.Channel.SendMessage("Wong channel accessed.");
-							}
-						});
+				Properties.Settings.Default.adminChannel = newChannel;
+				Properties.Settings.Default.Save();
+				await Context.Channel.SendMessageAsync(String.Format("Changed admin channel to {0}", newChannel));
+			}
+			else
+			{
+				await Context.Channel.SendMessageAsync("Wong channel accessed.");
+			}
+		}
 
-				cgb.CreateCommand("1")
-						.Description("Changes the channel in which this settings panel comes up.")
-						.Parameter("NewChannel", ParameterType.Required)
-						.Do(async e =>
-						{
-							if (e.Channel.ToString() == Properties.Settings.Default.adminChannel)
+		[Command("changeChallongeToken")]
+		[Summary("Changes the challonge token")]
+		public async Task ChangeChallongeTokenAsync(string newToken)
+        {
+			if(Context.Channel.ToString() == Properties.Settings.Default.adminChannel)
 							{
-								Properties.Settings.Default.adminChannel = e.GetArg("NewChannel");
-								Properties.Settings.Default.Save();
-								await e.Channel.SendMessage(String.Format("Changed admin channel to {0}", e.GetArg("NewChannel")));
-							}
-							else
-							{
-								await e.Channel.SendMessage("Wong channel accessed.");
-							}
-						});
+				Properties.Settings.Default.challongeToken = newToken;
+				Properties.Settings.Default.Save();
+				await Context.Channel.SendMessageAsync(String.Format("Changed the token to {0}", newToken));
+			}
+			else
+			{
+				await Context.Channel.SendMessageAsync("Wong channel accessed.");
+			}
+		}
 
-				cgb.CreateCommand("2")
-						.Description("Changes the challonge token")
-						.Parameter("NewToken", ParameterType.Required)
-						.Do(async e =>
-						{
-							if (e.Channel.ToString() == Properties.Settings.Default.adminChannel)
-							{
-								Properties.Settings.Default.challongeToken= e.GetArg("NewToken");
-								Properties.Settings.Default.Save();
-								await e.Channel.SendMessage(String.Format("Changed the token to {0}", e.GetArg("NewToken")));
-							}
-							else
-							{
-								await e.Channel.SendMessage("Wong channel accessed.");
-							}
-						});
-
-				cgb.CreateCommand("3")
-						.Description("Changes the challonge account")
-						.Parameter("NewAccount", ParameterType.Required)
-						.Do(async e =>
-						{
-							if (e.Channel.ToString() == Properties.Settings.Default.adminChannel)
-							{
-								Properties.Settings.Default.challongeAccount = e.GetArg("NewAccount");
-								Properties.Settings.Default.Save();
-								await e.Channel.SendMessage(String.Format("Changed the account to {0}", e.GetArg("NewAccount")));
-							}
-							else
-							{
-								await e.Channel.SendMessage("Wong channel accessed.");
-							}
-						});
-			});
+		[Command("changeChallongeAccount")]
+		[Summary("Changes the challonge account")]
+		public async Task ChangeChallongeAccountAsync(string newAccount)
+        {
+			if (Context.Channel.ToString() == Properties.Settings.Default.adminChannel)
+			{
+				Properties.Settings.Default.challongeAccount = newAccount;
+				Properties.Settings.Default.Save();
+				await Context.Channel.SendMessageAsync(String.Format("Changed the account to {0}", newAccount));
+			}
+			else
+			{
+				await Context.Channel.SendMessageAsync("Wong channel accessed.");
+			}
 		}
 	}
 }

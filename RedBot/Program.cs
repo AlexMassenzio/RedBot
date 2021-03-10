@@ -11,8 +11,7 @@ namespace RedBot
 	{
 		static void Main(string[] args)
 		{
-
-			if(Properties.Settings.Default.discordToken == "" && Properties.Settings.Default.adminChannel == "")
+			if (Properties.Settings.Default.discordToken == "" && Properties.Settings.Default.adminChannel == "")
 			{
 				Console.WriteLine("I can see this is the first time your using me! To start, I'll need two things from you:\n  1) Your Discord bot token");
 				Properties.Settings.Default.discordToken = Console.ReadLine().Trim();
@@ -22,8 +21,16 @@ namespace RedBot
 
 				Properties.Settings.Default.Save();
 			}
-
+			
+			new Program().MainAsync().GetAwaiter().GetResult();
+		}
+		public async Task MainAsync()
+		{
 			RedBotClient bot = new RedBotClient();
+			await bot.StartupAsync();
+
+			// Block this task until the program is closed.
+			await Task.Delay(-1);
 		}
 	}
 }

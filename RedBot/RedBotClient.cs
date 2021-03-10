@@ -7,13 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RedBot.Commands;
+using Discord.WebSocket;
+using System.Reflection;
+using RedBot.Commands.Utility;
 
 namespace RedBot
 {
 	public class RedBotClient
 	{
 		//General
-		private DiscordClient bot;
+		private readonly DiscordSocketClient bot;
+		private readonly CommandService cmd;
 
 		/// <summary>
 		/// Begins a new instance of the bot.
@@ -21,8 +25,12 @@ namespace RedBot
 		/// <param name="token">The token string given to your bot upon creation</param>
 		public RedBotClient()
 		{
-			bot = new DiscordClient();
+			bot = new DiscordSocketClient();
+			bot.Log += LogAsync;
 
+			cmd = new CommandService();
+
+			/*
 			bot.MessageReceived += ProcessMessageSpecial;
 
 			bot.UsingCommands(x => {
@@ -53,9 +61,22 @@ namespace RedBot
 				Console.ReadKey();
 				Environment.Exit(0);
 			}
+			*/
 		}
 
-		/// <summary>
+		public async Task StartupAsync()
+        {
+			await bot.LoginAsync(TokenType.Bot, Properties.Settings.Default.discordToken);
+			await bot.StartAsync();
+
+			bot.MessageReceived += ProcessMessageAsync;
+
+			await cmd.AddModulesAsync(assembly: Assembly.GetEntryAssembly(),
+										services: null);
+			await cmd.AddModuleAsync(typeof(Settings), null);
+		}
+
+		/*/// <summary>
 		/// Initializes all commands for the bot to run.
 		/// </summary>
 		/// <param name="cmd">The DiscordClient's CommandService</param>
@@ -66,9 +87,35 @@ namespace RedBot
 			new Commands.UtilityCommands(cmd);
 
 			new Commands.ChallongeCommands(cmd);
+		}*/
+
+		private async Task ProcessMessageAsync(SocketMessage msg)
+		{
+			// Don't process the command if it was a system message
+			var message = msg as SocketUserMessage;
+			if (message == null) return;
+
+			// Create a number to track where the prefix ends and the command begins
+			int argPos = 0;
+
+			// Determine if the message is a command based on the prefix and make sure no bots trigger commands
+			if (!(message.HasCharPrefix('~', ref argPos) ||
+				message.HasMentionPrefix(bot.CurrentUser, ref argPos)) ||
+				message.Author.IsBot)
+				return;
+
+			// Create a WebSocket-based command context based on the message
+			var context = new SocketCommandContext(bot, message);
+
+			// Execute the command with the command context we just
+			// created, along with the service provider for precondition checks.
+			await cmd.ExecuteAsync(
+				context: context,
+				argPos: argPos,
+				services: null);
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// Handles any non command messages.
 		/// </summary>
 		/// <param name="s">Sender</param>
@@ -84,6 +131,12 @@ namespace RedBot
 			{
 				e.Channel.SendFile("images/memes/datboi.jpg");
 			}
-		}
+		}*/
+
+		private Task LogAsync(LogMessage msg)
+        {
+			Console.WriteLine(msg.ToString());
+			return Task.CompletedTask;
+        }
 	}
 }
